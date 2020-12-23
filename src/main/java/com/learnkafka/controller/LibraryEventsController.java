@@ -2,6 +2,7 @@ package com.learnkafka.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.learnkafka.domain.LibraryEvent;
+import com.learnkafka.domain.LibraryEventType;
 import com.learnkafka.producer.LibraryEventProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,11 @@ public class LibraryEventsController {
 
         //invoke kafka producer
 
-       // libraryEventProducer.sendLibraryEvent22(libraryEvent);
+        libraryEvent.setLibraryEventType(LibraryEventType.NEW);
         libraryEventProducer.sendLibraryEvent_Approach2(libraryEvent);
-    //   log.info("SendResult is {} ", sendResult.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
     }
+
 
 
 

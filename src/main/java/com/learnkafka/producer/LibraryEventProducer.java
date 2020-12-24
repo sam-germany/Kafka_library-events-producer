@@ -36,8 +36,8 @@ public class LibraryEventProducer {
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);
 
-        ListenableFuture<SendResult<Integer,String>> listenableFuture =  kafkaTemplate22.sendDefault(key,value); // see video 31
-                                                                              // when we use .get() then it become a asynchronous call so the call come from
+        ListenableFuture<SendResult<Integer,String>> listenableFuture =  kafkaTemplate22.sendDefault(key,value); // <-- see video 31
+                                                                              // when we do not use .get() then it become a asynchronous call so the call come from
         listenableFuture.addCallback(new ListenableFutureCallback<SendResult<Integer, String>>() {    // from the controller and the call moves with 2 threads
             @Override
             public void onFailure(Throwable ex) {
@@ -51,14 +51,14 @@ public class LibraryEventProducer {
         });
     }
 
-    public void sendLibraryEvent_Approach2(LibraryEvent libraryEvent) throws JsonProcessingException {
+    public ListenableFuture<SendResult<Integer,String>> sendLibraryEvent_Approach2(LibraryEvent libraryEvent) throws JsonProcessingException {
 
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);
 
         ProducerRecord<Integer, String>  producerRecord22 = buildProducerRecord22(key, value, topic22);
-        ListenableFuture<SendResult<Integer,String>> listenableFuture =  kafkaTemplate22.send(producerRecord22); // see video 31
-                                                                      // when we use .get() then it become a asynchronous call so the call come from
+        ListenableFuture<SendResult<Integer,String>> listenableFuture =  kafkaTemplate22.send(producerRecord22); // <-- see video 31
+                                                                      // when we do not use .get() then it become a asynchronous call so the call come from
         listenableFuture.addCallback(new ListenableFutureCallback<SendResult<Integer, String>>() {    // from the controller and the call moves with 2 threads
             @Override
             public void onFailure(Throwable ex) {
@@ -69,6 +69,8 @@ public class LibraryEventProducer {
                 handleSuccess22(key, value, result);
             }
         });
+
+        return listenableFuture;
     }
 
     private ProducerRecord<Integer, String> buildProducerRecord22(Integer key, String value, String topic22) {

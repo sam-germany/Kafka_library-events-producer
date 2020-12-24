@@ -1,25 +1,15 @@
 package com.learnkafka.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.learnkafka.domain.Book;
-import com.learnkafka.domain.LibraryEvent;
 import com.learnkafka.producer.LibraryEventProducer;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //import static org.mockito.ArgumentMatchers.eq;
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @WebMvcTest(LibraryEventsController.class)
 @AutoConfigureMockMvc
@@ -32,7 +22,7 @@ public class LibraryEventControllerUnitTest {
     LibraryEventProducer libraryEventProducer22;
 
     ObjectMapper objectMapper22 = new ObjectMapper();
-
+/*
     @Test
     void postLibraryEvent() throws Exception {
 //given
@@ -90,6 +80,6 @@ public class LibraryEventControllerUnitTest {
               ).andExpect(status().is4xxClientError())
                .andExpect(content().string(expectedErrorMessage22));
     }
-
+*/
 
 }
